@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FinNews AI — Understand Financial News. Instantly.</title>
+  <meta name="description" content="AI-powered financial news summaries that turn complex market stories into simple insights." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2310b981'/%3E%3Cpath d='M6 21l7-7 4 4 9-10' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#news">Skip to news</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#top" class="brand" aria-label="FinNews AI home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="20" height="20"><path d="M6 21l7-7 4 4 9-10" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        FinNews<span class="accent">AI</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="siteNav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="siteNav" class="site-nav" aria-label="Main">
+        <a href="#about">About</a>
+        <a href="#how">How It Works</a>
+        <a href="/docs" id="apiDocsLink" target="_blank" rel="noopener">API</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="pill"><span class="dot" aria-hidden="true"></span> Powered by Llama 3.3 70B on Groq</span>
+          <h1>Understand Financial News. <span class="gradient-text">Instantly.</span></h1>
+          <p class="lead">AI-powered financial news summaries that turn complex market stories into simple, actionable insights.</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-lg" id="fetchSimplifyBtn">Fetch &amp; Simplify</button>
+            <a class="btn btn-ghost btn-lg" href="#how">How It Works</a>
+          </div>
+          <p class="fine">Educational summaries only — not financial advice.</p>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <svg viewBox="0 0 460 340" role="img" focusable="false">
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#10b981"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+              <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#10b981" stop-opacity=".35"/><stop offset="1" stop-color="#10b981" stop-opacity="0"/></linearGradient>
+            </defs>
+            <rect x="10" y="20" width="440" height="300" rx="24" fill="#111c33" stroke="#22314f"/>
+            <g stroke="#22314f"><line x1="30" y1="110" x2="430" y2="110"/><line x1="30" y1="170" x2="430" y2="170"/><line x1="30" y1="230" x2="430" y2="230"/></g>
+            <path d="M30 250 L100 200 L160 220 L230 150 L290 170 L360 90 L430 60 L430 290 L30 290Z" fill="url(#g2)"/>
+            <path class="draw" d="M30 250 L100 200 L160 220 L230 150 L290 170 L360 90 L430 60" fill="none" stroke="url(#g1)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="230" cy="150" r="6" fill="#10b981"/><circle cx="360" cy="90" r="6" fill="#22d3ee"/>
+            <g transform="translate(40 40)"><rect width="170" height="54" rx="14" fill="#0b1224" stroke="#22314f"/><rect x="14" y="14" width="26" height="26" rx="8" fill="url(#g1)"/><text x="52" y="27" fill="#e5edf9" font-size="12" font-weight="700" font-family="sans-serif">AI Summary</text><text x="52" y="43" fill="#8ea3c7" font-size="11" font-family="sans-serif">Plain-language ready</text></g>
+            <g transform="translate(270 230)"><rect width="150" height="56" rx="14" fill="#0b1224" stroke="#22314f"/><text x="16" y="24" fill="#8ea3c7" font-size="11" font-family="sans-serif">Jargon explained</text><text x="16" y="44" fill="#10b981" font-size="15" font-weight="700" font-family="sans-serif">Inflation → prices ↑</text></g>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section id="news" class="section news-section" aria-labelledby="newsTitle">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="newsTitle">Latest Financial News</h2>
+          <p class="muted">Search, filter, and let AI explain it in simple words.</p>
+        </div>
+
+        <form class="search" id="searchForm" role="search">
+          <label for="searchInput" class="sr-only">Search financial news</label>
+          <input id="searchInput" type="search" maxlength="100" placeholder="Search Tesla, inflation, interest rates, oil prices…" autocomplete="off" />
+          <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+
+        <div class="chips" id="chips" role="group" aria-label="News categories"></div>
+
+        <div id="demoBanner" class="banner" hidden>
+          <strong>Demo Data:</strong> NewsAPI key not configured — these are sample articles, not real news.
+        </div>
+
+        <div id="state" class="state" aria-live="polite"></div>
+        <div id="grid" class="grid"></div>
+      </div>
+    </section>
+
+    <section id="how" class="section alt" aria-labelledby="howTitle">
+      <div class="container">
+        <div class="section-head center"><h2 id="howTitle">How It Works</h2><p class="muted">From headline to understanding in four steps.</p></div>
+        <ol class="steps">
+          <li class="step"><span class="step-icon">📡</span><span class="step-num">Step 1</span><h3>Fetch</h3><p>Get the latest financial news from NewsAPI.</p></li>
+          <li class="step"><span class="step-icon">🧠</span><span class="step-num">Step 2</span><h3>Analyze</h3><p>Groq's Llama 3.3 70B analyzes the article.</p></li>
+          <li class="step"><span class="step-icon">✨</span><span class="step-num">Step 3</span><h3>Simplify</h3><p>Complex financial language is converted into understandable explanations.</p></li>
+          <li class="step"><span class="step-icon">💡</span><span class="step-num">Step 4</span><h3>Understand</h3><p>Users quickly understand the important points.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="about" class="section" aria-labelledby="aboutTitle">
+      <div class="container about">
+        <div>
+          <h2 id="aboutTitle">About FinNews AI</h2>
+          <p>FinNews AI combines real-time news retrieval, generative AI, large language models, and natural language simplification, built on FastAPI and modern web technologies.</p>
+          <p>Our goal is accessibility and education — helping anyone understand what financial headlines mean. It is <strong>not</strong> investment advice, and it never tells you to buy, sell, or hold anything.</p>
+        </div>
+        <ul class="tags" aria-label="Technologies">
+          <li>Real-time news</li><li>Generative AI</li><li>Llama 3.3 70B</li><li>Plain-language NLP</li><li>FastAPI</li><li>Vanilla JS</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="brand">FinNews<span class="accent">AI</span></div>
+        <p class="muted">Making financial news easier to understand with AI.</p>
+      </div>
+      <nav aria-label="Footer" class="footer-links">
+        <a href="#about">About</a>
+        <a href="#how">How It Works</a>
+        <a href="/docs" id="footerApiLink" target="_blank" rel="noopener">API</a>
+        <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+    <div class="container legal">AI-generated content may contain errors. This platform is for informational and educational purposes only and does not provide financial advice.</div>
+  </footer>
+
+  <div id="toasts" class="toasts" role="region" aria-label="Notifications" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
