@@ -4,6 +4,10 @@ AI-powered financial news simplification. Fetches news from **NewsAPI** and uses
 
 > AI-generated summaries are informational only and are **not financial advice**.
 
+Demo Link : https://newsai-finance.netlify.app
+
+Full Document : https://1drv.ms/w/c/A4AA4BCFAE29EAB4/IQDwS0PDVSQxQ65Em9JFR2OCAZl1OTsrrf5OO_RGkLr6GDo?e=UTD30t
+
 ## Features
 - "Fetch & Simplify": loads 6 articles and summarizes them automatically (2 AI requests at a time)
 - Per-article "Simplify with AI", expand/collapse summaries
